@@ -105,6 +105,15 @@ const SERVICES = [
     href: '#contact',
     highlight: false,
   },
+  {
+    icon: '⚙️',
+    title: 'Automações de Segurança',
+    tag: 'Por demanda · proposta personalizada',
+    desc: 'Scripts e pipelines sob medida para o seu ambiente: integração de vulnerabilidades Tenable com base de patches (ex: SUSE), análise de compliance de hardware em massa, geração automática de relatórios semanais, acompanhamento de zero-days, análise de imagens e evidências forenses, e muito mais. Descreva o que precisa automatizar — montamos a proposta.',
+    cta: 'Descrever minha necessidade',
+    href: '#contact',
+    highlight: false,
+  },
 ]
 
 const SEVERITY_COLOR: Record<string, string> = {
