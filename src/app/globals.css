@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #09090b;
+  color: #fafafa;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.brand-glow {
+  box-shadow: 0 0 24px rgba(0, 255, 157, 0.25);
+}
+
+.cert-badge {
+  @apply text-xs font-mono px-2 py-1 rounded border border-brand/30 text-brand bg-brand/5;
+}
+
+.scan-line {
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 255, 157, 0.03) 50%,
+    transparent 100%
+  );
+  animation: scan 4s linear infinite;
+}
+
+@keyframes scan {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
