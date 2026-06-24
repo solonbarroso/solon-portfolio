@@ -2,12 +2,70 @@
 
 import { useState } from 'react'
 
-const CERTS = [
-  'CYSA+', 'SEC+', 'DPO', 'LGPD', 'GDPR', 'CCSA',
-  'MCRTA', 'MCBTA', 'EHE', 'PTE', 'CFF', 'CSF',
-  'ISMF', 'ISFS', 'ISRMF', 'NSE1', 'NSE2', 'LPI',
-  'MCASEA', 'MCSA', 'MCITP', 'MCTS', 'MCP', 'MCT',
-  'ITIL', 'CSAP',
+const CERTS_OFFENSIVE = [
+  'CAPenX', 'CNPen', 'CAPen', 'CMPen',
+  'Web-RTA', 'API-RTA', 'MCRTA', 'CRT-ID', 'CRTA',
+  'CAPT', 'CRTOM', 'EHE', 'PTE',
+]
+
+const CERTS_DEFENSIVE = [
+  'CSAP', 'CySA+', 'Security+', 'CCSA',
+  'Forensics', 'NSE1', 'NSE2',
+]
+
+const CERTS_GOV = [
+  'DPO', 'LGPD', 'GDPR', 'ISO 27001', 'ISO 27005',
+  'ITIL v4', 'Azure Sec Engineer', 'MCSA', 'MCITP', 'LPI Linux',
+]
+
+const CERTS_TENABLE = [
+  'Tenable EASM SE', 'Tenable EASM Sales', 'Nessus Expert SE',
+  'Tenable Cloud SE', 'Tenable Vuln SE', 'Tenable OT SE',
+  'Tenable Identity SE', 'Tenable Web App Scanning',
+  'Tenable One SE', 'CASA API Security',
+]
+
+const CVES = [
+  {
+    id: 'CVE-2025-63947',
+    type: 'SQL Injection',
+    target: 'phpMsAdmin v2.2',
+    severity: 'Critical',
+    desc: 'Stacked query SQL injection via database_mode.php — permite execução arbitrária de comandos no banco de dados sem sanitização.',
+    url: 'https://github.com/solonbarroso/vulnerability-research/blob/main/advisories/phpMsAdmin/CVE-2025-63947.md',
+  },
+  {
+    id: 'CVE-2025-63948',
+    type: 'Reflected XSS',
+    target: 'phpMsAdmin v2.2',
+    severity: 'High',
+    desc: 'Cross-Site Scripting refletido via parâmetro dbname — execução de JavaScript arbitrário no contexto da sessão administrativa.',
+    url: 'https://github.com/solonbarroso/vulnerability-research/blob/main/advisories/phpMsAdmin/CVE-2025-63948.md',
+  },
+  {
+    id: 'CVE-2025-63949',
+    type: 'Reflected XSS',
+    target: 'yohanawi Hotel Management System',
+    severity: 'High',
+    desc: 'XSS refletido em múltiplos arquivos (room.php, bills.php, new_client.php +8) — parâmetros GET sem sanitização em toda a aplicação.',
+    url: 'https://github.com/solonbarroso/vulnerability-research/blob/main/advisories/Hotel-Management-System/CVE-2025-63949.md',
+  },
+  {
+    id: 'CVE-2025-63950',
+    type: 'Insecure Deserialization',
+    target: 'Twittodon',
+    severity: 'Critical',
+    desc: 'PHP Object Injection via download.php — parâmetro obj deserializado sem validação permite injeção de objetos arbitrários.',
+    url: 'https://github.com/solonbarroso/vulnerability-research/blob/main/advisories/Twittodon/CVE-2025-63950.md',
+  },
+  {
+    id: 'CVE-2025-63951',
+    type: 'Insecure Deserialization',
+    target: 'RPi-Jukebox-RFID',
+    severity: 'Critical',
+    desc: 'PHP Object Injection via rss-mp3.php — parâmetro rss exposto a deserialização não autenticada com acesso a operações de sistema de arquivos.',
+    url: 'https://github.com/solonbarroso/vulnerability-research/blob/main/advisories/RPi-Jukebox-RFID/CVE-2025-63951.md',
+  },
 ]
 
 const SERVICES = [
@@ -15,16 +73,16 @@ const SERVICES = [
     icon: '🎯',
     title: 'EASM Shield',
     tag: 'SaaS · A partir de R$497/mês',
-    desc: 'Plataforma de External Attack Surface Management que mapeia subdomínios, portas abertas, serviços expostos e vulnerabilidades na sua infraestrutura externa — automaticamente, 24h por dia.',
+    desc: 'Plataforma SaaS de External Attack Surface Management. Mapeia subdomínios, portas expostas, Shadow IT e vulnerabilidades na sua infraestrutura externa — automaticamente, 24h.',
     cta: 'Ver demonstração',
     href: '#easm',
     highlight: true,
   },
   {
     icon: '🔴',
-    title: 'Pentest por Contrato',
+    title: 'Red Team / Pentest',
     tag: 'A partir de R$5.000 / escopo',
-    desc: 'Teste de invasão estruturado com escopo definido, relatório executivo e técnico, e validação de remediação. Web, API, infraestrutura e cloud.',
+    desc: 'Operações de Red Team com TTPs reais (MITRE ATT&CK), exploração de Active Directory, movimentação lateral e exfiltração. Pentest web, mobile, API e infraestrutura com relatório executivo e técnico.',
     cta: 'Solicitar proposta',
     href: '#contact',
     highlight: false,
@@ -33,30 +91,26 @@ const SERVICES = [
     icon: '🛡️',
     title: 'vCISO Mensal',
     tag: 'Retainer a partir de R$3.000/mês',
-    desc: 'Chief Information Security Officer fracional. Estratégia de segurança, gestão de riscos, políticas, relatórios para diretoria e supervisão de compliance — sem contratar um CISO full-time.',
+    desc: 'Chief Information Security Officer fracional. Estratégia, gestão de riscos, políticas, Detection Engineering e relatórios para diretoria — sem contratar um CISO full-time.',
     cta: 'Conhecer o serviço',
     href: '#contact',
     highlight: false,
   },
   {
     icon: '📋',
-    title: 'Consultoria LGPD / DPO',
+    title: 'LGPD / DPO',
     tag: 'Projeto ou retainer',
-    desc: 'Adequação à LGPD com diagnóstico, mapeamento de dados, criação de políticas, treinamento de equipes e atuação como DPO (Encarregado de Dados) externo.',
+    desc: 'Adequação à LGPD com diagnóstico, mapeamento de dados, criação de políticas e atuação como DPO (Encarregado de Dados) externo. Certificado LGPD + GDPR.',
     cta: 'Falar sobre LGPD',
     href: '#contact',
     highlight: false,
   },
 ]
 
-const STACK = [
-  { label: 'SIEM', items: 'Splunk · Wazuh · Elastic' },
-  { label: 'EDR', items: 'CrowdStrike · CarbonBlack' },
-  { label: 'Scan', items: 'subfinder · naabu · nuclei · nmap · httpx' },
-  { label: 'Cloud', items: 'AWS · Azure · GCP Security' },
-  { label: 'Compliance', items: 'LGPD · GDPR · ISO 27001 · NIST' },
-  { label: 'AppSec', items: 'OWASP · Burp Suite · DAST · SAST' },
-]
+const SEVERITY_COLOR: Record<string, string> = {
+  Critical: 'text-red-400 border-red-400/30 bg-red-400/5',
+  High: 'text-orange-400 border-orange-400/30 bg-orange-400/5',
+}
 
 export default function Home() {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
@@ -84,6 +138,7 @@ export default function Home() {
           <div className="hidden sm:flex items-center gap-6 text-sm text-textSub">
             <a href="#services" className="hover:text-brand transition-colors">Serviços</a>
             <a href="#easm"     className="hover:text-brand transition-colors">EASM Shield</a>
+            <a href="#cves"     className="hover:text-brand transition-colors">CVEs</a>
             <a href="#about"    className="hover:text-brand transition-colors">Sobre</a>
             <a href="#contact"
                className="px-4 py-1.5 rounded border border-brand text-brand text-xs font-mono
@@ -96,10 +151,8 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="relative pt-32 pb-24 px-6 overflow-hidden">
-        {/* grid background */}
         <div className="absolute inset-0 opacity-[0.03]"
              style={{ backgroundImage: 'linear-gradient(#00ff9d 1px,transparent 1px),linear-gradient(90deg,#00ff9d 1px,transparent 1px)', backgroundSize: '40px 40px' }} />
-        {/* scan line */}
         <div className="scan-line absolute inset-0 pointer-events-none h-32 w-full" />
 
         <div className="relative max-w-5xl mx-auto">
@@ -110,21 +163,27 @@ export default function Home() {
 
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4">
             Solon Barroso
-            <span className="block text-brand">Cybersecurity Consultant</span>
+            <span className="block text-brand">Red Team · AppSec · EASM</span>
           </h1>
 
           <p className="text-textSub text-lg max-w-2xl mb-8 leading-relaxed">
-            18 anos de experiência em segurança ofensiva e defensiva.
-            40+ certificações internacionais. Criador do{' '}
-            <span className="text-brand font-semibold">EASM Shield</span> — plataforma de
-            gestão de superfície de ataque para PMEs brasileiras. DPO certificado.
+            18+ anos em segurança ofensiva e defensiva. Red Team Operations, Pentest Web/Mobile/API,
+            Vulnerability Research com{' '}
+            <span className="text-brand font-semibold">5 CVEs publicados no MITRE</span>.
+            Criador do <span className="text-brand font-semibold">EASM Shield</span>.
+            40+ certificações internacionais. DPO certificado LGPD/GDPR.
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <a href="#easm"
+            <a href="#services"
                className="px-6 py-3 bg-brand text-bg font-bold rounded-lg hover:bg-brandDim
                           transition-all brand-glow text-sm">
-              Ver EASM Shield →
+              Ver serviços →
+            </a>
+            <a href="#cves"
+               className="px-6 py-3 border border-red-500/50 text-red-400 rounded-lg
+                          hover:border-red-400 hover:bg-red-400/5 transition-all text-sm font-mono">
+              5 CVEs publicados
             </a>
             <a href="#contact"
                className="px-6 py-3 border border-border text-textSub rounded-lg
@@ -133,13 +192,12 @@ export default function Home() {
             </a>
           </div>
 
-          {/* stats row */}
           <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
               { value: '18+', label: 'anos de experiência' },
               { value: '40+', label: 'certificações' },
+              { value: '5',   label: 'CVEs no MITRE' },
               { value: 'DPO', label: 'LGPD & GDPR certificado' },
-              { value: 'EASM', label: 'SaaS proprietário' },
             ].map(s => (
               <div key={s.label} className="p-4 rounded-lg border border-border bg-surface">
                 <div className="text-2xl font-bold text-brand font-mono">{s.value}</div>
@@ -151,14 +209,13 @@ export default function Home() {
       </section>
 
       {/* ── SERVICES ── */}
-      <section id="services" className="py-20 px-6">
+      <section id="services" className="py-20 px-6 bg-surface">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-brand text-xs font-mono mb-2">// serviços</p>
             <h2 className="text-3xl font-bold">O que ofereço</h2>
             <p className="text-textSub mt-2 max-w-xl">
-              Da descoberta automatizada de exposições até liderança estratégica de segurança —
-              serviços sob medida para PMEs e empresas de médio porte.
+              Segurança ofensiva e gestão de superfície de ataque para PMEs e empresas de médio porte.
             </p>
           </div>
 
@@ -168,7 +225,7 @@ export default function Home() {
                    className={`p-6 rounded-xl border transition-all group
                      ${s.highlight
                        ? 'border-brand/50 bg-brand/5 hover:bg-brand/10'
-                       : 'border-border bg-surface hover:border-brand/30'}`}>
+                       : 'border-border bg-bg hover:border-brand/30'}`}>
                 <div className="flex items-start justify-between mb-3">
                   <span className="text-2xl">{s.icon}</span>
                   {s.highlight && (
@@ -192,25 +249,23 @@ export default function Home() {
       </section>
 
       {/* ── EASM SHIELD ── */}
-      <section id="easm" className="py-20 px-6 bg-surface">
+      <section id="easm" className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <p className="text-brand text-xs font-mono mb-2">// produto</p>
           <h2 className="text-3xl font-bold mb-4">EASM Shield</h2>
           <p className="text-textSub max-w-2xl mb-10 leading-relaxed">
-            Plataforma SaaS de External Attack Surface Management. Descobre subdomínios,
-            portas abertas, Shadow IT, certificados expirados e vulnerabilidades — de forma
-            automática, contínua e sem agente na sua infraestrutura.
+            Plataforma SaaS de External Attack Surface Management desenvolvida com as mesmas
+            ferramentas usadas em operações reais de Red Team — subfinder, nuclei, naabu, httpx, nmap.
           </p>
 
-          {/* pipeline steps */}
           <div className="grid sm:grid-cols-4 gap-3 mb-10">
             {[
-              { n: '01', title: 'Descoberta Passiva', desc: 'subfinder + tlsx + dnsx — mapeia toda superfície externa' },
-              { n: '02', title: 'Port Scan',          desc: 'naabu top-1000 portas — identifica serviços expostos' },
-              { n: '03', title: 'Fingerprint',        desc: 'httpx + nmap — stack tecnológico e banners de serviço' },
-              { n: '04', title: 'Risk Engine',        desc: 'nuclei — takeovers, exposures, vulnerabilidades reais' },
+              { n: '01', title: 'Descoberta Passiva', desc: 'subfinder + tlsx + dnsx — mapeia toda superfície externa e Shadow IT' },
+              { n: '02', title: 'Port Scan',          desc: 'naabu top-1000 portas — identifica serviços expostos sem alarmar firewalls' },
+              { n: '03', title: 'Fingerprint',        desc: 'httpx + nmap — stack tecnológico, banners e certificados SSL' },
+              { n: '04', title: 'Risk Engine',        desc: 'nuclei — takeovers, exposures, vulns reais com score 0-100' },
             ].map(p => (
-              <div key={p.n} className="p-4 rounded-lg border border-border bg-bg">
+              <div key={p.n} className="p-4 rounded-lg border border-border bg-surface">
                 <div className="text-brand font-mono text-xs mb-2">{p.n}</div>
                 <div className="font-semibold text-sm mb-1">{p.title}</div>
                 <div className="text-textSub text-xs leading-relaxed">{p.desc}</div>
@@ -218,7 +273,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* pricing */}
           <div className="grid sm:grid-cols-3 gap-4">
             {[
               { name: 'Starter',    price: 'R$497',   period: '/mês', domains: '3 domínios',  scans: 'Scan semanal',  features: ['Dashboard executivo', 'Alertas por email', 'Relatório PDF'] },
@@ -227,8 +281,8 @@ export default function Home() {
             ].map(p => (
               <div key={p.name}
                    className={`p-6 rounded-xl border
-                     ${p.highlight ? 'border-brand bg-brand/5' : 'border-border bg-surface2'}`}>
-                {p.highlight && (
+                     ${(p as any).highlight ? 'border-brand bg-brand/5' : 'border-border bg-surface'}`}>
+                {(p as any).highlight && (
                   <div className="text-[10px] font-mono text-brand font-bold mb-3">★ MAIS POPULAR</div>
                 )}
                 <div className="text-xl font-bold mb-1">{p.name}</div>
@@ -245,7 +299,7 @@ export default function Home() {
                 </ul>
                 <a href="#contact"
                    className={`block text-center py-2.5 rounded-lg text-sm font-medium transition-all
-                     ${p.highlight
+                     ${(p as any).highlight
                        ? 'bg-brand text-bg hover:bg-brandDim'
                        : 'border border-border text-textSub hover:border-brand hover:text-brand'}`}>
                   Começar agora
@@ -256,34 +310,115 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CVEs ── */}
+      <section id="cves" className="py-20 px-6 bg-surface">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-brand text-xs font-mono mb-2">// vulnerability research</p>
+          <h2 className="text-3xl font-bold mb-3">5 CVEs publicados no MITRE</h2>
+          <p className="text-textSub mb-10 max-w-2xl">
+            Pesquisador independente de vulnerabilidades. CVEs registrados e publicados no
+            National Vulnerability Database (NVD/MITRE) em 2025.
+          </p>
+
+          <div className="space-y-4">
+            {CVES.map(cve => (
+              <div key={cve.id}
+                   className="p-5 rounded-xl border border-border bg-bg hover:border-red-400/30 transition-all group">
+                <div className="flex flex-wrap items-start gap-3 mb-2">
+                  <a href={cve.url} target="_blank" rel="noopener noreferrer"
+                     className="font-mono font-bold text-brand hover:underline text-sm">
+                    {cve.id}
+                  </a>
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-bold ${SEVERITY_COLOR[cve.severity]}`}>
+                    {cve.severity}
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-border text-textSub">
+                    {cve.type}
+                  </span>
+                  <span className="text-xs text-muted font-mono">{cve.target}</span>
+                </div>
+                <p className="text-sm text-textSub leading-relaxed">{cve.desc}</p>
+                <a href={cve.url} target="_blank" rel="noopener noreferrer"
+                   className="text-xs text-muted hover:text-brand transition-colors mt-2 inline-block font-mono">
+                  Ver advisory completo →
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 p-4 rounded-lg border border-border bg-bg/50 flex flex-wrap gap-4 text-sm">
+            <a href="https://github.com/solonbarroso/vulnerability-research"
+               target="_blank" rel="noopener noreferrer"
+               className="text-textSub hover:text-brand transition-colors font-mono">
+              GitHub Research →
+            </a>
+            <a href="https://www.credly.com/users/solon-da-silva"
+               target="_blank" rel="noopener noreferrer"
+               className="text-textSub hover:text-brand transition-colors font-mono">
+              Credly Badges →
+            </a>
+            <a href="https://tryhackme.com/p/solonbarroso"
+               target="_blank" rel="noopener noreferrer"
+               className="text-textSub hover:text-brand transition-colors font-mono">
+              TryHackMe →
+            </a>
+            <a href="https://app.hackthebox.com/users/412815"
+               target="_blank" rel="noopener noreferrer"
+               className="text-textSub hover:text-brand transition-colors font-mono">
+              HackTheBox →
+            </a>
+            <a href="https://www.credential.net/profile/solonbarrosodasilva16926/wallet"
+               target="_blank" rel="noopener noreferrer"
+               className="text-textSub hover:text-brand transition-colors font-mono">
+              Credential.net →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── ABOUT ── */}
       <section id="about" className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <p className="text-brand text-xs font-mono mb-2">// sobre</p>
-          <h2 className="text-3xl font-bold mb-8">18 anos protegendo infraestruturas</h2>
+          <h2 className="text-3xl font-bold mb-8">Segurança ofensiva é o foco principal</h2>
 
-          <div className="grid sm:grid-cols-2 gap-10">
+          <div className="grid sm:grid-cols-2 gap-10 mb-12">
             <div>
               <p className="text-textSub leading-relaxed mb-4">
                 Tecnólogo em Redes de Computadores com MBA em Gestão da Segurança da Informação
-                e pós-graduação em Ethical Hacking, Forense Computacional e Segurança de Redes.
+                e pós-graduações em Ethical Hacking, Forense Computacional e Segurança de Redes.
+                Mais de 18 anos de trajetória em TI.
               </p>
               <p className="text-textSub leading-relaxed mb-4">
-                Atuei em Blue Team, SOC, AppSec e SecOps. Trabalho com SIEM, EDR e resposta a
-                incidentes no dia a dia — o que me permite combinar visão ofensiva e defensiva
-                em cada consultoria.
+                <span className="text-text font-semibold">Segurança ofensiva é o foco central</span> —
+                Red Team Operations com TTPs reais (MITRE ATT&CK), exploração de Active Directory,
+                Red Team Infrastructure (C2, redirectors, OPSEC), Pentest Web, Mobile e API.
+                Pesquisador com 5 CVEs publicados no MITRE.
+              </p>
+              <p className="text-textSub leading-relaxed mb-4">
+                Do lado defensivo: Detection Engineering, Threat Hunting, criação de regras
+                customizadas para SIEM/EDR e resposta a incidentes — o conhecimento ofensivo
+                aplicado diretamente na construção de barreiras de defesa.
               </p>
               <p className="text-textSub leading-relaxed">
                 Baseado em <span className="text-text font-medium">Manaus, AM</span>, atendo
-                empresas em todo o Brasil de forma remota e na região Norte presencialmente.
+                empresas em todo o Brasil remotamente e na região Norte presencialmente.
               </p>
             </div>
 
-            {/* tech stack */}
-            <div className="space-y-3">
-              {STACK.map(s => (
+            {/* specialties */}
+            <div className="space-y-4">
+              {[
+                { label: '⚔️ Ofensiva', items: 'Red Team Ops · AD Exploitation · Lateral Movement · Persistence · Exfiltration' },
+                { label: '🌐 Web / API / Mobile', items: 'RCE · SQLi · XXE · Deserialization · OAuth/JWT · SSRF · Bypass WAF' },
+                { label: '☁️ Cloud Red Team', items: 'AWS (S3, EC2, IAM) · Azure · GCP · Multi-Cloud (MCRTA)' },
+                { label: '🏗️ Red Team Infra', items: 'C2 Setup · Redirectors · Phishing · OPSEC · Cloud Automation' },
+                { label: '🔬 AppSec / DevSecOps', items: 'SAST/DAST/IAST · Semgrep · Tenable · Shift Left · CI/CD' },
+                { label: '🛡️ Detection Engineering', items: 'Regras SIEM (Splunk, Wazuh, Elastic) · Threat Hunting · MITRE ATT&CK' },
+                { label: '📊 SIEM / EDR', items: 'Splunk · Wazuh · Elastic · CrowdStrike · CarbonBlack' },
+              ].map(s => (
                 <div key={s.label} className="flex gap-3 items-start">
-                  <span className="text-xs font-mono text-brand w-20 shrink-0 pt-0.5">{s.label}</span>
+                  <span className="text-xs font-mono text-brand w-36 shrink-0 pt-0.5">{s.label}</span>
                   <span className="text-sm text-textSub">{s.items}</span>
                 </div>
               ))}
@@ -291,12 +426,38 @@ export default function Home() {
           </div>
 
           {/* cert wall */}
-          <div className="mt-12">
-            <p className="text-xs font-mono text-muted mb-4">certificações</p>
-            <div className="flex flex-wrap gap-2">
-              {CERTS.map(c => (
-                <span key={c} className="cert-badge">{c}</span>
-              ))}
+          <div className="space-y-5">
+            <div>
+              <p className="text-xs font-mono text-red-400 mb-3">⚔️ ofensiva</p>
+              <div className="flex flex-wrap gap-2">
+                {CERTS_OFFENSIVE.map(c => (
+                  <span key={c} className="text-xs font-mono px-2 py-1 rounded border border-red-400/30 text-red-400 bg-red-400/5">{c}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-mono text-blue-400 mb-3">🛡️ defesa</p>
+              <div className="flex flex-wrap gap-2">
+                {CERTS_DEFENSIVE.map(c => (
+                  <span key={c} className="text-xs font-mono px-2 py-1 rounded border border-blue-400/30 text-blue-400 bg-blue-400/5">{c}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-mono text-yellow-400 mb-3">📋 tech & governança</p>
+              <div className="flex flex-wrap gap-2">
+                {CERTS_GOV.map(c => (
+                  <span key={c} className="text-xs font-mono px-2 py-1 rounded border border-yellow-400/30 text-yellow-400 bg-yellow-400/5">{c}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-mono text-brand mb-3">🔍 tenable</p>
+              <div className="flex flex-wrap gap-2">
+                {CERTS_TENABLE.map(c => (
+                  <span key={c} className="cert-badge">{c}</span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -334,7 +495,7 @@ export default function Home() {
                     placeholder="Seu nome" />
                 </div>
                 <div>
-                  <label className="text-xs text-muted font-mono mb-1 block">Email corporativo *</label>
+                  <label className="text-xs text-muted font-mono mb-1 block">Email *</label>
                   <input required type="email"
                     value={form.email}
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
@@ -373,13 +534,12 @@ export default function Home() {
           <div className="mt-8 pt-8 border-t border-border flex flex-wrap gap-6 text-sm text-textSub">
             <a href="https://www.linkedin.com/in/solon-barroso-da-silva-28400543/"
                target="_blank" rel="noopener noreferrer"
-               className="hover:text-brand transition-colors">
-              LinkedIn ↗
-            </a>
+               className="hover:text-brand transition-colors">LinkedIn ↗</a>
+            <a href="https://github.com/solonbarroso"
+               target="_blank" rel="noopener noreferrer"
+               className="hover:text-brand transition-colors">GitHub ↗</a>
             <a href="mailto:barrososolon@gmail.com"
-               className="hover:text-brand transition-colors">
-              barrososolon@gmail.com
-            </a>
+               className="hover:text-brand transition-colors">barrososolon@gmail.com</a>
             <span>Manaus, AM · Brasil</span>
           </div>
         </div>
@@ -392,7 +552,7 @@ export default function Home() {
             solon<span className="text-brand">.sec</span> — Solon Barroso da Silva
           </span>
           <span className="text-xs text-muted">
-            Consultor de Cibersegurança · Manaus, AM, Brasil
+            Red Team · AppSec · EASM · Manaus, AM, Brasil
           </span>
         </div>
       </footer>
