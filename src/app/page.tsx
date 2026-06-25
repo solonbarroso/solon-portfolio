@@ -264,15 +264,15 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-4">EASM Shield</h2>
           <p className="text-textSub max-w-2xl mb-10 leading-relaxed">
             Plataforma SaaS de External Attack Surface Management desenvolvida com as mesmas
-            ferramentas usadas em operações reais de Red Team — subfinder, nuclei, naabu, httpx, nmap.
+            ferramentas usadas em operações reais de Red Team.
           </p>
 
           <div className="grid sm:grid-cols-4 gap-3 mb-10">
             {[
-              { n: '01', title: 'Descoberta Passiva', desc: 'subfinder + tlsx + dnsx — mapeia toda superfície externa e Shadow IT' },
-              { n: '02', title: 'Port Scan',          desc: 'naabu top-1000 portas — identifica serviços expostos sem alarmar firewalls' },
-              { n: '03', title: 'Fingerprint',        desc: 'httpx + nmap — stack tecnológico, banners e certificados SSL' },
-              { n: '04', title: 'Risk Engine',        desc: 'nuclei — takeovers, exposures, vulns reais com score 0-100' },
+              { n: '01', title: 'Descoberta Passiva', desc: 'Mapeia toda a superfície externa e Shadow IT — subdomínios, certificados e registros DNS' },
+              { n: '02', title: 'Port Scan',          desc: 'Identifica serviços expostos nas 1.000 portas mais críticas sem disparar alertas' },
+              { n: '03', title: 'Fingerprint',        desc: 'Stack tecnológico, banners de serviço e certificados SSL de cada ativo encontrado' },
+              { n: '04', title: 'Risk Engine',        desc: 'Detecta takeovers, exposições e vulnerabilidades reais com score de risco 0-100' },
             ].map(p => (
               <div key={p.n} className="p-4 rounded-lg border border-border bg-surface">
                 <div className="text-brand font-mono text-xs mb-2">{p.n}</div>
