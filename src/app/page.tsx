@@ -75,7 +75,7 @@ const SERVICES = [
     tag: 'SaaS · A partir de R$497/mês',
     desc: 'Plataforma SaaS de External Attack Surface Management. Mapeia subdomínios, portas expostas, Shadow IT e vulnerabilidades na sua infraestrutura externa — automaticamente, 24h.',
     cta: 'Ver demonstração',
-    href: '#easm',
+    href: 'https://easm.solonsec.org',
     highlight: true,
   },
   {
@@ -146,7 +146,7 @@ export default function Home() {
           </span>
           <div className="hidden sm:flex items-center gap-6 text-sm text-textSub">
             <a href="#services" className="hover:text-brand transition-colors">Serviços</a>
-            <a href="#easm"     className="hover:text-brand transition-colors">EASM Shield</a>
+            <a href="https://easm.solonsec.org" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors">EASM Shield</a>
             <a href="#cves"     className="hover:text-brand transition-colors">CVEs</a>
             <a href="#about"    className="hover:text-brand transition-colors">Sobre</a>
             <a href="#contact"
