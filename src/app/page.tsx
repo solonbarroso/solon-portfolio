@@ -282,6 +282,25 @@ export default function Home() {
             ))}
           </div>
 
+          {/* Card Demo Gratuito */}
+          <a href="https://easm.solonsec.org" target="_blank" rel="noopener noreferrer"
+             className="block mb-6 p-5 rounded-xl border border-brand/40 bg-brand/5 hover:bg-brand/10 transition-all group">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-[10px] font-mono text-brand font-bold mb-1">🎯 EXPERIMENTE GRÁTIS</div>
+                <div className="text-lg font-bold">Demo Gratuito — Scan do seu domínio</div>
+                <div className="text-sm text-textSub mt-1">Resultados em ~5 minutos · Sem cadastro · Sem cartão</div>
+              </div>
+              <span className="text-brand text-xl group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+            <div className="flex flex-wrap gap-3 mt-3 text-xs text-textSub">
+              <span>✓ Mapa de subdomínios</span>
+              <span>✓ Portas expostas</span>
+              <span>✓ Shadow IT</span>
+              <span>✓ Score de risco 0-100</span>
+            </div>
+          </a>
+
           <div className="grid sm:grid-cols-3 gap-4">
             {[
               { name: 'Starter',    price: 'R$497',   period: '/mês', domains: '3 domínios',  scans: 'Scan semanal',  features: ['Dashboard executivo', 'Alertas por email', 'Relatório PDF'] },
