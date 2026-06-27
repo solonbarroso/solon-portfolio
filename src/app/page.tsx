@@ -131,7 +131,7 @@ export default function Home() {
     const body = encodeURIComponent(
       `Nome: ${form.name}\nEmpresa: ${form.company}\nEmail: ${form.email}\n\n${form.message}`
     )
-    window.location.href = `mailto:barrososolon@gmail.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:suporte@solonsec.org?subject=${subject}&body=${body}`
     setSent(true)
   }
 
@@ -507,7 +507,7 @@ export default function Home() {
               <p className="font-semibold">Mensagem preparada!</p>
               <p className="text-textSub text-sm mt-1">
                 Seu cliente de email deve ter aberto. Se não, escreva para{' '}
-                <span className="text-brand">barrososolon@gmail.com</span>
+                <span className="text-brand">suporte@solonsec.org</span>
               </p>
             </div>
           ) : (
@@ -566,8 +566,8 @@ export default function Home() {
             <a href="https://github.com/solonbarroso"
                target="_blank" rel="noopener noreferrer"
                className="hover:text-brand transition-colors">GitHub ↗</a>
-            <a href="mailto:barrososolon@gmail.com"
-               className="hover:text-brand transition-colors">barrososolon@gmail.com</a>
+            <a href="mailto:suporte@solonsec.org"
+               className="hover:text-brand transition-colors">suporte@solonsec.org</a>
             <span>Manaus, AM · Brasil</span>
           </div>
         </div>
