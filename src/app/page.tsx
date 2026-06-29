@@ -305,7 +305,7 @@ export default function Home() {
             {[
               { name: 'Starter',    price: 'R$697',   period: '/mês', domains: '3 domínios',  scans: 'Scan diário',   features: ['Dashboard executivo', 'Alertas por email', 'Relatório PDF'] },
               { name: 'Growth',     price: 'R$1.997', period: '/mês', domains: '10 domínios', scans: '4 scans/dia',   features: ['Tudo do Starter', 'API access', 'Webhooks', 'Análise IA PT-BR'], highlight: true },
-              { name: 'Enterprise', price: 'R$5.497', period: '/mês', domains: 'Ilimitado',   scans: 'Scan contínuo', features: ['Tudo do Growth', 'vCISO mensal incluso', 'SLA 99.9%', 'Onboarding dedicado'] },
+              { name: 'Enterprise', price: 'R$5.497', period: '/mês', domains: 'Ilimitado',   scans: 'Scan contínuo', features: ['Tudo do Growth', 'SLA 99.9%', 'Onboarding dedicado'] },
             ].map(p => (
               <div key={p.name}
                    className={`p-6 rounded-xl border
