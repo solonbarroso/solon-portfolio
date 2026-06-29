@@ -72,7 +72,7 @@ const SERVICES = [
   {
     icon: '🎯',
     title: 'EASM Shield',
-    tag: 'SaaS · A partir de R$497/mês',
+    tag: 'SaaS · A partir de R$697/mês',
     desc: 'Plataforma SaaS de External Attack Surface Management. Mapeia subdomínios, portas expostas, Shadow IT e vulnerabilidades na sua infraestrutura externa — automaticamente, 24h.',
     cta: 'Ver demonstração',
     href: 'https://easm.solonsec.org',
@@ -303,9 +303,9 @@ export default function Home() {
 
           <div className="grid sm:grid-cols-3 gap-4">
             {[
-              { name: 'Starter',    price: 'R$497',   period: '/mês', domains: '3 domínios',  scans: 'Scan semanal',  features: ['Dashboard executivo', 'Alertas por email', 'Relatório PDF'] },
-              { name: 'Growth',     price: 'R$1.497', period: '/mês', domains: '15 domínios', scans: 'Scan diário',   features: ['Tudo do Starter', 'API access', 'Webhook Slack/Discord', 'Priorização por risco'], highlight: true },
-              { name: 'Enterprise', price: 'R$3.997', period: '/mês', domains: 'Ilimitado',   scans: 'Scan contínuo', features: ['Tudo do Growth', 'vCISO mensal incluso', 'SLA 99.9%', 'Onboarding dedicado'] },
+              { name: 'Starter',    price: 'R$697',   period: '/mês', domains: '3 domínios',  scans: 'Scan diário',   features: ['Dashboard executivo', 'Alertas por email', 'Relatório PDF'] },
+              { name: 'Growth',     price: 'R$1.997', period: '/mês', domains: '10 domínios', scans: '4 scans/dia',   features: ['Tudo do Starter', 'API access', 'Webhooks', 'Análise IA PT-BR'], highlight: true },
+              { name: 'Enterprise', price: 'R$5.497', period: '/mês', domains: 'Ilimitado',   scans: 'Scan contínuo', features: ['Tudo do Growth', 'vCISO mensal incluso', 'SLA 99.9%', 'Onboarding dedicado'] },
             ].map(p => (
               <div key={p.name}
                    className={`p-6 rounded-xl border
